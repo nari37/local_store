@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Form</title>
+ 
+</head>
+<style>
+
+    body {
+                font-family: Arial, sans-serif;
+                background-color: #f2f2f2;
+            }
+    
+            .login-container {
+                width: 300px;
+                margin: 100px auto;
+                padding: 20px;
+                box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+                border: 1px solid #2a2828;
+                border-radius: 5px;
+            }
+    
+            .login-container h2 {
+                text-align: center;
+            }
+    
+            .form-group {
+                margin-bottom: 15px;
+            }
+    
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+    
+            .form-group input[type="text"],
+            .form-group input[type="email"],
+            .form-group input[type="password"],
+            .form-group input[type="username"] {
+                width: 90%;
+                padding: 10px;
+                border: 1px solid #8e8888;
+                border-radius: 3px;
+            }
+    
+            .form-group button {
+                width: 100%;
+                padding: 10px;
+                background-color: #4CAF50;
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+    
+            
+            .alert-container {
+                text-align: center;
+            }
+    
+        
+            .alert-button {
+                background-color: #4CAF50;
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                padding: 10px 20px;
+                cursor: pointer;
+            }
+           
+            .tostclass{
+                position: absolute;
+                display: grid;
+                place-items: center;
+            }
+            #tost-c{
+                display: grid;
+                place-items: center;
+            }
+    
+           /* portfolio CSS */
+           
+            
+        </style>
+<body>
+    <div id="tost-c" style="display: none;">
+           
+    </div>
+    <div class="login-container">
+        
+        <h2>Login Form</h2>
+        <form>
+           
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+                <label for="password" >Password:</label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+
+
+                
+                <button type="submit" onclick="checkLogin()">Login</button>
+            </div>
+          <div class="register">
+               If you don't have an account?<a href="/Register.html"> Register</a>
+           </div>
+        </form>
+    </div>
+    
+
+    <script>
+        function msg(sms,bgc){
+             var TOST =document.createElement('div')
+             TOST.className = "tostclass"
+             TOST.textContent = sms;
+             TOST.style.backgroundColor = bgc;
+             
+            var some = document.getElementById("tost-c");
+            some.appendChild(TOST)
+            some.style.display = "block"
+
+            setTimeout(()=>{
+                some.removeChild(TOST);
+            some.style.display = "none";
+            },2000)
+        }
+      
+
+
+      function checkLogin() {
+        event.preventDefault();
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    var storedData = localStorage.getItem('usersData');
+    var userdetails = JSON.parse(storedData);
+        var details = userdetails.find((i)=>{ i.email===email })
+        console.log(details)
+    // Check if the userdetails variable is not null (i.e., data exists in local storage)
+    if (userdetails !== null) {
+        // Loop through the userdetails array to find a matching email and password
+        var found = false; // Flag to track if the email is found
+        for (var i = 0; i < userdetails.length; i++) {
+            if (userdetails[i].email === email && userdetails[i].password === password) {
+                // If a match is found, the login is successful
+                // alert('Login successful!');
+                msg('Login successfull!','green')
+                setTimeout(()=>{
+                    window.location.href = '/portfolio.html'
+
+                },3000)
+           // set the current_user name,email 
+           let current_user = userdetails.filter((eachone)=>{
+                 return eachone.email == email && eachone.password == password
+           })[0]
+              //set the  current_user name,email  in to localstore...
+            localStorage.setItem('Name',current_user.username)
+            localStorage.setItem('Email',current_user.email)
+            localStorage.setItem('pic',current_user.profile)
+            localStorage.setItem('Password',current_user.password)           
+             found = true;
+                break;   
+                
+            }
+         
+        }
+
+        if (!found) {
+            // If no matching email and password were found, login fails
+            alert('Invalid email or password. Please try again.');
+        }
+    } else {
+        // If no data in local storage, display a message
+        alert('You don\'t have an account. Please register.');
+    }
+}
+  
+
+
+
+      
+    </script>
+</body>
+</html>

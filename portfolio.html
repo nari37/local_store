@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+</head>
+<style>
+     body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #208cb7;
+            color: #fff;
+            text-align: center;
+            padding: 6px;
+        }
+
+        .profile {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile img {  
+            max-width: 100px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 20px;
+            
+        }
+        #pimg{
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid black;
+            background-color: beige;
+        }
+        table{
+            border-collapse: collapse;
+            width:100%;
+        }
+        tr,th{
+            border: 1px solid black;
+        }
+        @media (width < 480px) {
+        tr,th{
+            font-size: 0.5rem;
+            border: 1px solid black;
+        }
+    }
+        /* }
+        @media (width < 0px) {
+            table{
+           
+            width: 80%;
+        } */
+
+</style>
+<body>
+    <header>
+        <h1>Welcome to My Portfolio</h1>
+        <button id="btn" style="padding: 5px; background-color:rgba(230, 44, 16, 0.932); color: #fff; border-radius: 5px; cursor:pointer" onclick="logout()">Logout</button>
+    </header>
+
+    <div class="profile">
+        <img src="#" alt="" id="pimg">
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Settings</th>
+            </tr>
+            <tr>
+                <th><script>
+                    document.write(localStorage.getItem('Name'))
+                </script></th>
+                <th><script>
+                    document.write(localStorage.getItem('Email'))
+                </script></th>
+                <th><script>
+                    document.write(localStorage.getItem('Password'))
+                </script></th>
+                <th>
+                    <span><button onclick="Edite()">Edite</button></span> <span><button id="Deletebtn" onclick="dleteac()">Delete Account</button></span>
+                    
+                </th>
+            </tr>
+        </table>
+        <h2 >User Name: (<script>
+            document.write(localStorage.getItem('Name'))
+        </script>) </h2>
+        
+        <h3>Email: (<script>
+            document.write(localStorage.getItem('Email'))
+        </script>)</h3>
+        <p>Location: City, Country</p>
+        <p>Interests: Web Development, Design, Photography</p>
+    </div>
+    <script>
+        const logbtn = document.getElementById('btn')
+        const deleteaccount = document.getElementById('Deletebtn')
+
+        function dleteac(){
+            alert('Are u sure you want delete your account')
+            return
+        }
+        // log out funtion should be relocate in to login page...
+        function logout(){
+            alert('your logout')
+            window.location.href = '/login.html'
+        }
+        function Edite(){
+            window.location.href = '/Register.html'
+        }
+        document.getElementById("pimg").src=localStorage.getItem("pic");
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+      <script>
+        var obj = {
+            name:"karthik",
+            role:"dev",
+            org:"rise"
+        }
+        function test(place, lang){
+            this.place = place
+            this.lang = lang
+          console.log(this)
+        }
+        const sample = test.bind(obj, "Vizag", "javascript")
+        sample()
+      </script>
+    </body>
+</html>

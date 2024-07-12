@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .register-container {
+            max-width: 300px;
+            margin: 10px auto;
+            padding: 20px;
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+            border: 1px solid #837676;
+            border-radius: 5px;
+        }
+
+        .register-container h2 {
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Registration Form</h2>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username"  placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm password" required>
+            </div>
+            <div class="form-group">
+                <label for="fileInput">Select a file:</label>
+              <input type="file" id="fileInput"  style="cursor: pointer;" name="uploadedFile" accept="image/png,image/jpg" required/>
+            </div>
+            <!-- image preview -->
+            <image src="#" alt="image_area" id="image_area" style="display: none; height: 80px;" ></image>
+            <div class="form-group">
+                <button type="submit" id="mybtn" onclick="dataenter()">Register</button>
+            </div>
+    </div>
+    <script>
+       
+    // file reader funtion... 
+       const fileInput = document.getElementById('fileInput');
+       const image_area = document.getElementById('image_area');
+       let image_url;
+       fileInput.addEventListener('change',(e) =>{
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function (e){
+            image_area.src = e.target.result;
+            image_area.style.display = 'block';
+            image_url = reader.result;
+        };
+       });
+
+    function dataenter() {
+        event.preventDefault();
+    var selectedFile = fileInput.files[0];
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    var username = document.getElementById('username').value;
+    var cpassword = document.getElementById('confirm-password').value;
+    // Check if the password and confirm password match
+    if (password !== cpassword) {
+        alert("Passwords don't match!");
+        return;
+    }
+
+    if(email == '' && username == ''){
+            alert('please enter all feilds')
+          return;  
+        }
+    
+  
+    // Check if data already exists in local storage
+    var existingDataJSON = localStorage.getItem('usersData');
+    console.log(existingDataJSON)
+     
+    var usersData = existingDataJSON ? JSON.parse(existingDataJSON) : [];
+    // Check if the email or username already exists
+    for (var i = 0; i < usersData.length; i++) {
+        if (usersData[i].email === email) {
+            alert("Email already exists!");
+            return;
+        }
+
+        if (usersData[i].username === username) {
+            alert("Username already exists!");
+            return;
+        }
+        
+        
+    }
+    
+    
+
+    // Create an object to store the data
+    var user = {
+        email: email,
+        password: password,
+        username: username,
+        profile: image_url
+    };
+
+    // Add the new user data to the array
+    usersData.push(user);
+
+    // Convert the array to a JSON string
+    var usersDataJSON = JSON.stringify(usersData); //[{"email":""}...]
+    console.log(typeof(usersDataJSON))
+    // Store the JSON string in local storage
+    localStorage.setItem(  'usersData', usersDataJSON);
+
+    // Optionally, you can show an alert to inform the user that data is stored
+    alert('Register successfully!');
+    loginopen()
+
+}
+function loginopen(){
+        return (window.location.href='/login.html')
+       }
+
+
+
+     
+    </script>
+</body>
+</html>
